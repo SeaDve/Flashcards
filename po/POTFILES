@@ -1,0 +1,7 @@
+data/io.github.seadve.Flashcards.desktop.in
+data/io.github.seadve.Flashcards.appdata.xml.in
+data/io.github.seadve.Flashcards.gschema.xml
+src/window.ui
+src/main.py
+src/window.py
+

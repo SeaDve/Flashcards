@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=flashcards
+Exec=flashcards
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
