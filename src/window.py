@@ -17,6 +17,8 @@
 
 from gi.repository import Gtk, Handy
 
+from .cardstack import CardStack
+
 
 @Gtk.Template(resource_path='/io/github/seadve/Flashcards/window.ui')
 class FlashcardsWindow(Handy.ApplicationWindow):
@@ -26,10 +28,20 @@ class FlashcardsWindow(Handy.ApplicationWindow):
     bottom_viewswitcher = Gtk.Template.Child()
     squeezer = Gtk.Template.Child()
 
+    main_listbox = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.squeezer.connect("notify::visible-child", self.on_squeezer_notify)
+
+        self.list = ["hidave", "hida", "hidasd", "higsd"]
+
+        for item in self.list:
+            stack = CardStack(title=item)
+            self.main_listbox.insert(stack, -1)
+
+
 
     def on_squeezer_notify(self, widget, event):
         child = self.squeezer.get_visible_child()
