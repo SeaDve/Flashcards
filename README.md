@@ -6,7 +6,7 @@
 <p align="center"><strong>Simple memorizing aid</strong></p>
 
 <p align="center">
-  <img src="screenshots/Flashcards-preview.png"/>
+  <img src="screenshots/Flashcards-preview.png" alt="Preview"/>
 </p>
 
 ## WARNING
