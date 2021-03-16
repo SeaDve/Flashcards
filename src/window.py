@@ -30,20 +30,34 @@ class FlashcardsWindow(Handy.ApplicationWindow):
 
     main_listbox = Gtk.Template.Child()
 
+    new_cardstack_button = Gtk.Template.Child()
+    title_entry = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.squeezer.connect("notify::visible-child", self.on_squeezer_notify)
 
-        self.list = ["hidave", "hida", "hidasd", "higsd"]
+        self.new_cardstack_button.connect("clicked", self.on_new_cardstack)
 
+        self.list = ["Parts of the heart", "Chemical Nomenclature", "Types of food", "Everything you see"]
+
+        # initialize the cardstack list
         for item in self.list:
-            stack = CardStack(title=item)
-            self.main_listbox.insert(stack, -1)
+            cardstack = CardStack(title=item)
+            self.main_listbox.insert(cardstack, -1)
 
-
+    def on_new_cardstack(self, widget):
+        title = self.title_entry.get_text()
+        self.title_entry.set_text("")
+        self.list.append(title)
+        new_cardstack = CardStack(title=title)
+        self.main_listbox.insert(new_cardstack, -1)
 
     def on_squeezer_notify(self, widget, event):
         child = self.squeezer.get_visible_child()
         self.bottom_viewswitcher.set_reveal(child != self.top_viewswitcher)
+
+
+
         

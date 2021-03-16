@@ -28,4 +28,7 @@ class CardStack(Handy.ActionRow):
         self.title = title
         self.set_title(self.title)
 
+        cards_list = []
+        self.set_subtitle(f"{len(cards_list)} cards")
+
         
