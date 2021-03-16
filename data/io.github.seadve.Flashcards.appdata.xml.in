@@ -3,6 +3,21 @@
 	<id>io.github.seadve.Flashcards.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
+	 <name>Flashcards</name>
+  <summary>Simple memorizing aid</summary>
 	<description>
+    <p>
+    Flashcards is a simple application which could help you memorize stuff.
+    </p>
 	</description>
+  <url type="homepage">https://github.com/SeaDve/Flashcards</url>
+  <url type="bugtracker">https://github.com/SeaDve/Flashcards/issues</url>
+  <url type="translate">https://github.com/SeaDve/Flashcards/tree/master/po</url>
+  <url type="donation">https://paypal.me/sedve</url>
+  <!-- Translators: please do NOT translate this -->
+  <developer_name>Dave Patrick</developer_name>
+  <content_rating type="oars-1.1"/>
+
+  <launchable type="desktop-id">io.github.seadve.Flashcards.desktop</launchable>
+
 </component>
