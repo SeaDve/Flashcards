@@ -22,7 +22,16 @@ from gi.repository import Gtk, Handy
 class FlashcardsWindow(Handy.ApplicationWindow):
     __gtype_name__ = 'FlashcardsWindow'
 
-    label = Gtk.Template.Child()
+    top_viewswitcher = Gtk.Template.Child()
+    bottom_viewswitcher = Gtk.Template.Child()
+    squeezer = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.squeezer.connect("notify::visible-child", self.on_squeezer_notify)
+
+    def on_squeezer_notify(self, widget, event):
+        child = self.squeezer.get_visible_child()
+        self.bottom_viewswitcher.set_reveal(child != self.top_viewswitcher)
+        
