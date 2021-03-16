@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/seadve/Flashcards">
+    <file alias="window.ui">ui/window.ui</file>
+
+    <file preprocess="xml-stripblanks">icons/pin2-symbolic.svg</file>
+  </gresource>
+</gresources>
