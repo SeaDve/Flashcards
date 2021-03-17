@@ -56,7 +56,7 @@
       </item>
       <item>
         <attribute name="action">app.show-about</attribute>
-        <attribute name="label" translatable="yes">About Kooha</attribute>
+        <attribute name="label" translatable="yes">About Flashcards</attribute>
       </item>
     </section>
   </menu>
