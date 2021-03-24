@@ -50,7 +50,7 @@ class FlashcardsWindow(Handy.ApplicationWindow):
 
         # initialize the cardstack list
         for item in self.list:
-            cardstack = CardStackRow(self.main_overlay, self.main_listbox, title=item)
+            cardstack = CardStackRow(self, title=item)
             self.main_listbox.insert(cardstack, -1)
 
     def set_play_mode(self):
@@ -69,7 +69,7 @@ class FlashcardsWindow(Handy.ApplicationWindow):
         title = self.title_entry.get_text()
         self.title_entry.set_text("")
         self.list.append(title)
-        new_cardstack = CardStackRow(self.main_overlay, self.main_listbox, title=title)
+        new_cardstack = CardStackRow(self, title=title)
         self.main_listbox.insert(new_cardstack, -1)
 
     def on_squeezer_notify(self, widget, event):

@@ -24,27 +24,36 @@ class CardStackRow(Handy.ActionRow):
 
     play_button = Gtk.Template.Child()
 
-    def __init__(self, overlay, listbox, title, **kwargs):
+    def __init__(self, window, title, **kwargs):
         super().__init__(**kwargs)
 
         self.title = title
         self.set_title(self.title)
-        self.overlay = overlay
-        self.listbox = listbox
+        self.window = window
+        self.listbox = self.window.main_listbox
+        self.overlay = self.window.main_overlay
 
 
         self.play_box = CardStack()
 
         self.play_button.connect("clicked", self.on_play_button_clicked)
-
-
+        self.window.back_button.connect("clicked", self.on_back_button_clicked)
 
         cards_list = []
         self.set_subtitle(f"{len(cards_list)} cards")
 
+        self.play_box.set_question(self.title)
+
     def on_play_button_clicked(self, widget):
+        self.window.set_play_mode()
         self.overlay.add_overlay(self.play_box)
-        self.listbox.set_visible(False)
+
+    def on_back_button_clicked(self, widget):
+        try:
+            self.window.unset_play_mode()
+            self.play_box.get_parent().remove(self.play_box)
+        except:
+            pass
 
 
 
@@ -58,3 +67,6 @@ class CardStack(Gtk.Box):
         super().__init__(**kwargs)
 
         pass
+
+    def set_question(self, question):
+        self.question_label.set_label(question)
