@@ -22,21 +22,39 @@ from gi.repository import Gtk, Handy
 class CardStackRow(Handy.ActionRow):
     __gtype_name__ = 'CardStackRow'
 
-    def __init__(self, overlay, title, **kwargs):
+    play_button = Gtk.Template.Child()
+
+    def __init__(self, overlay, listbox, title, **kwargs):
         super().__init__(**kwargs)
 
         self.title = title
-        self.overlay = overlay
-
         self.set_title(self.title)
+        self.overlay = overlay
+        self.listbox = listbox
+
+
+        self.play_box = CardStack()
+
+        self.play_button.connect("clicked", self.on_play_button_clicked)
+
+
 
         cards_list = []
         self.set_subtitle(f"{len(cards_list)} cards")
+
+    def on_play_button_clicked(self, widget):
+        self.overlay.add_overlay(self.play_box)
+        self.listbox.set_visible(False)
+
 
 
 @Gtk.Template(resource_path='/io/github/seadve/Flashcards/cardstack.ui')
 class CardStack(Gtk.Box):
     __gtype_name__ = 'CardStack'
 
-    def __init__(self):
+    question_label = Gtk.Template.Child()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
         pass

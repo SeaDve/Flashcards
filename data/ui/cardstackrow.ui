@@ -7,7 +7,7 @@
     <property name="can-focus">True</property>
     <property name="activatable">False</property>
     <child>
-      <object class="GtkButton">
+      <object class="GtkButton" id="play_button">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="receives-default">True</property>

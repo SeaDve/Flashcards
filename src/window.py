@@ -35,6 +35,10 @@ class FlashcardsWindow(Handy.ApplicationWindow):
 
     main_overlay = Gtk.Template.Child()
 
+    left_headerbar_stack = Gtk.Template.Child()
+    plus_button = Gtk.Template.Child()
+    back_button = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -46,14 +50,26 @@ class FlashcardsWindow(Handy.ApplicationWindow):
 
         # initialize the cardstack list
         for item in self.list:
-            cardstack = CardStackRow(self.main_overlay, title=item)
+            cardstack = CardStackRow(self.main_overlay, self.main_listbox, title=item)
             self.main_listbox.insert(cardstack, -1)
+
+    def set_play_mode(self):
+        self.main_listbox.set_visible(False)
+        self.top_viewswitcher.set_visible(False)
+        self.bottom_viewswitcher.set_visible(False)
+        self.left_headerbar_stack.set_visible_child(self.back_button)
+
+    def unset_play_mode(self):
+        self.main_listbox.set_visible(True)
+        self.top_viewswitcher.set_visible(True)
+        self.bottom_viewswitcher.set_visible(True)
+        self.left_headerbar_stack.set_visible_child(self.plus_button)
 
     def on_new_cardstack(self, widget):
         title = self.title_entry.get_text()
         self.title_entry.set_text("")
         self.list.append(title)
-        new_cardstack = CardStackRow(self.main_overlay, title=title)
+        new_cardstack = CardStackRow(self.main_overlay, self.main_listbox, title=title)
         self.main_listbox.insert(new_cardstack, -1)
 
     def on_squeezer_notify(self, widget, event):
