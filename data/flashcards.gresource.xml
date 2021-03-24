@@ -3,6 +3,7 @@
   <gresource prefix="/io/github/seadve/Flashcards">
     <file alias="window.ui">ui/window.ui</file>
     <file alias="cardstack.ui">ui/cardstack.ui</file>
+    <file alias="cardstackrow.ui">ui/cardstackrow.ui</file>
 
     <file preprocess="xml-stripblanks">icons/pin2-symbolic.svg</file>
   </gresource>

@@ -17,7 +17,7 @@
 
 from gi.repository import Gtk, Handy
 
-from .cardstack import CardStack
+from .cardstack import CardStackRow
 
 
 @Gtk.Template(resource_path='/io/github/seadve/Flashcards/window.ui')
@@ -33,6 +33,8 @@ class FlashcardsWindow(Handy.ApplicationWindow):
     new_cardstack_button = Gtk.Template.Child()
     title_entry = Gtk.Template.Child()
 
+    main_overlay = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -44,14 +46,14 @@ class FlashcardsWindow(Handy.ApplicationWindow):
 
         # initialize the cardstack list
         for item in self.list:
-            cardstack = CardStack(title=item)
+            cardstack = CardStackRow(self.main_overlay, title=item)
             self.main_listbox.insert(cardstack, -1)
 
     def on_new_cardstack(self, widget):
         title = self.title_entry.get_text()
         self.title_entry.set_text("")
         self.list.append(title)
-        new_cardstack = CardStack(title=title)
+        new_cardstack = CardStackRow(self.main_overlay, title=title)
         self.main_listbox.insert(new_cardstack, -1)
 
     def on_squeezer_notify(self, widget, event):

@@ -18,17 +18,25 @@
 from gi.repository import Gtk, Handy
 
 
-@Gtk.Template(resource_path='/io/github/seadve/Flashcards/cardstack.ui')
-class CardStack(Handy.ActionRow):
-    __gtype_name__ = 'CardStack'
+@Gtk.Template(resource_path='/io/github/seadve/Flashcards/cardstackrow.ui')
+class CardStackRow(Handy.ActionRow):
+    __gtype_name__ = 'CardStackRow'
 
-    def __init__(self, title, **kwargs):
+    def __init__(self, overlay, title, **kwargs):
         super().__init__(**kwargs)
 
         self.title = title
+        self.overlay = overlay
+
         self.set_title(self.title)
 
         cards_list = []
         self.set_subtitle(f"{len(cards_list)} cards")
 
-        
+
+@Gtk.Template(resource_path='/io/github/seadve/Flashcards/cardstack.ui')
+class CardStack(Gtk.Box):
+    __gtype_name__ = 'CardStack'
+
+    def __init__(self):
+        pass
