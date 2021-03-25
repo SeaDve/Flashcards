@@ -112,4 +112,3 @@ class Card(Handy.ActionRow):
 
     def set_answer(self, answer):
         self.set_title(answer)
-
