@@ -23,6 +23,7 @@ class CardStackRow(Handy.ActionRow):
     __gtype_name__ = 'CardStackRow'
 
     play_button = Gtk.Template.Child()
+    edit_button = Gtk.Template.Child()
 
     def __init__(self, window, title, **kwargs):
         super().__init__(**kwargs)
@@ -33,10 +34,11 @@ class CardStackRow(Handy.ActionRow):
         self.listbox = self.window.main_listbox
         self.overlay = self.window.main_overlay
 
-
         self.play_box = CardStack()
+        self.edit_box = CardStackEdit()
 
         self.play_button.connect("clicked", self.on_play_button_clicked)
+        self.edit_button.connect("clicked", self.on_edit_button_clicked)
         self.window.back_button.connect("clicked", self.on_back_button_clicked)
 
         cards_list = []
@@ -48,10 +50,20 @@ class CardStackRow(Handy.ActionRow):
         self.window.set_play_mode()
         self.overlay.add_overlay(self.play_box)
 
+    def on_edit_button_clicked(self, widget):
+        self.window.set_play_mode()
+        self.overlay.add_overlay(self.edit_box)
+
     def on_back_button_clicked(self, widget):
+        self.window.unset_play_mode()
+
         try:
-            self.window.unset_play_mode()
             self.play_box.get_parent().remove(self.play_box)
+        except:
+            pass
+
+        try:
+            self.edit_box.get_parent().remove(self.edit_box)
         except:
             pass
 
@@ -70,3 +82,36 @@ class CardStack(Gtk.Box):
 
     def set_question(self, question):
         self.question_label.set_label(question)
+
+
+@Gtk.Template(resource_path='/io/github/seadve/Flashcards/cardstackedit.ui')
+class CardStackEdit(Gtk.Box):
+    __gtype_name__ = 'CardStackEdit'
+
+    edit_mode_listbox = Gtk.Template.Child()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        questions = {"What are you doing": "Nothing", "Omg":"Ala lang"}
+
+        for answer, question in questions.items():
+            question_row = Card()
+            question_row.set_question(question)
+            question_row.set_answer(answer)
+            self.edit_mode_listbox.insert(question_row, -1)
+
+
+@Gtk.Template(resource_path='/io/github/seadve/Flashcards/card.ui')
+class Card(Handy.ActionRow):
+    __gtype_name__ = 'Card'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def set_question(self, question):
+        self.set_subtitle(question)
+
+    def set_answer(self, answer):
+        self.set_title(answer)
+

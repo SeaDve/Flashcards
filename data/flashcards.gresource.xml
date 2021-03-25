@@ -4,6 +4,8 @@
     <file alias="window.ui">ui/window.ui</file>
     <file alias="cardstack.ui">ui/cardstack.ui</file>
     <file alias="cardstackrow.ui">ui/cardstackrow.ui</file>
+    <file alias="cardstackedit.ui">ui/cardstackedit.ui</file>
+    <file alias="card.ui">ui/card.ui</file>
 
     <file preprocess="xml-stripblanks">icons/pin2-symbolic.svg</file>
   </gresource>
