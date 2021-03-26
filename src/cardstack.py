@@ -24,7 +24,7 @@ class CardStackRow(Handy.ActionRow):
 
     play_button = Gtk.Template.Child()
 
-    def __init__(self, window, title, **kwargs):
+    def __init__(self, window, cards_list, title, **kwargs):
         super().__init__(**kwargs)
 
         self.title = title
@@ -32,17 +32,17 @@ class CardStackRow(Handy.ActionRow):
         self.window = window
         self.listbox = self.window.main_listbox
         self.overlay = self.window.main_overlay
+        self.cards_list = cards_list
+
+        self.window.data["cardstack"]
+        self.set_subtitle(f"{len(cards_list)} cards")
 
         self.play_box = CardStack()
-        questions = {"What are you doing": "Nothing", "Omg":"Ala lang", title:"test"}
-        self.edit_box = CardStackEdit(questions)
+        self.edit_box = CardStackEdit(self.cards_list)
 
         self.play_button.connect("clicked", self.on_play_button_clicked)
         self.connect("activated", self.on_edit_mode)
         self.window.back_button.connect("clicked", self.on_back_button_clicked)
-
-        cards_list = []
-        self.set_subtitle(f"{len(cards_list)} cards")
 
         self.play_box.set_question(self.title)
 
@@ -90,13 +90,13 @@ class CardStackEdit(Gtk.Box):
 
     edit_mode_listbox = Gtk.Template.Child()
 
-    def __init__(self, questions, **kwargs):
+    def __init__(self, cards_list, **kwargs):
         super().__init__(**kwargs)
 
-        for answer, question in questions.items():
+        for item in cards_list:
             question_row = Card()
-            question_row.set_question(question)
-            question_row.set_answer(answer)
+            question_row.set_question(item["question"])
+            question_row.set_answer(item["answer"])
             self.edit_mode_listbox.insert(question_row, -1)
 
 

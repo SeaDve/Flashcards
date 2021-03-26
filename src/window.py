@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import json
+
 from gi.repository import Gtk, Handy
 
 from .cardstack import CardStackRow
@@ -38,32 +40,43 @@ class FlashcardsWindow(Handy.ApplicationWindow):
     left_headerbar_stack = Gtk.Template.Child()
     plus_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    search_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.squeezer.connect("notify::visible-child", self.on_squeezer_notify)
-
         self.new_cardstack_button.connect("clicked", self.on_new_cardstack)
 
-        self.list = ["Parts of the heart", "Chemical Nomenclature", "Types of food", "Everything you see"]
-
         # initialize the cardstack list
-        for item in self.list:
-            cardstack = CardStackRow(self, title=item)
+        with open('/home/dave/Projects/flashcards/src/data.json') as file:
+            self.data = json.load(file)
+
+        for stack in self.data["cardstack"]:
+            cards_list = []
+            for card in stack["cards"]:
+                cards_list.append(card)
+
+            cardstack = CardStackRow(self, cards_list, title=stack["title"])
             self.main_listbox.insert(cardstack, -1)
 
     def set_play_mode(self):
         self.main_listbox.set_visible(False)
         self.top_viewswitcher.set_visible(False)
         self.bottom_viewswitcher.set_visible(False)
+        self.search_button.set_visible(False)
         self.left_headerbar_stack.set_visible_child(self.back_button)
 
     def unset_play_mode(self):
         self.main_listbox.set_visible(True)
         self.top_viewswitcher.set_visible(True)
         self.bottom_viewswitcher.set_visible(True)
+        self.search_button.set_visible(True)
         self.left_headerbar_stack.set_visible_child(self.plus_button)
+
+    def on_squeezer_notify(self, widget, event):
+        child = self.squeezer.get_visible_child()
+        self.bottom_viewswitcher.set_reveal(child != self.top_viewswitcher)
 
     def on_new_cardstack(self, widget):
         title = self.title_entry.get_text()
@@ -71,10 +84,6 @@ class FlashcardsWindow(Handy.ApplicationWindow):
         self.list.append(title)
         new_cardstack = CardStackRow(self, title=title)
         self.main_listbox.insert(new_cardstack, -1)
-
-    def on_squeezer_notify(self, widget, event):
-        child = self.squeezer.get_visible_child()
-        self.bottom_viewswitcher.set_reveal(child != self.top_viewswitcher)
 
 
 
