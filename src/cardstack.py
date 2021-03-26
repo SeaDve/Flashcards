@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, Handy
+from gi.repository import Gtk, Handy, GLib
 
 
 @Gtk.Template(resource_path='/io/github/seadve/Flashcards/cardstackrow.ui')
@@ -37,21 +37,23 @@ class CardStackRow(Handy.ActionRow):
         self.window.data["cardstack"]
         self.set_subtitle(f"{len(cards_list)} cards")
 
-        self.play_box = CardStack()
         self.edit_box = CardStackEdit(self.cards_list)
+
+        self.play_box = CardStack()
+        self.play_box.set_question(self.title)
 
         self.play_button.connect("clicked", self.on_play_button_clicked)
         self.connect("activated", self.on_edit_mode)
         self.window.back_button.connect("clicked", self.on_back_button_clicked)
 
-        self.play_box.set_question(self.title)
-
     def on_play_button_clicked(self, widget):
         self.window.set_play_mode()
+        self.window.cardstack_title.set_text(self.title)
         self.overlay.add_overlay(self.play_box)
 
     def on_edit_mode(self, widget):
         self.window.set_play_mode()
+        self.window.cardstack_title.set_text(self.title)
         self.overlay.add_overlay(self.edit_box)
 
     def on_back_button_clicked(self, widget):
@@ -78,8 +80,6 @@ class CardStack(Gtk.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        pass
-
     def set_question(self, question):
         self.question_label.set_label(question)
 
@@ -101,14 +101,23 @@ class CardStackEdit(Gtk.Box):
 
 
 @Gtk.Template(resource_path='/io/github/seadve/Flashcards/card.ui')
-class Card(Handy.ActionRow):
+class Card(Handy.ExpanderRow):
     __gtype_name__ = 'Card'
+
+    question_entry = Gtk.Template.Child()
+    answer_entry = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        GLib.timeout_add(500, self.update, priority=GLib.PRIORITY_LOW)
 
     def set_question(self, question):
-        self.set_subtitle(question)
+        self.question_entry.set_text(question)
 
     def set_answer(self, answer):
-        self.set_title(answer)
+        self.answer_entry.set_text(answer)
+
+    def update(self):
+        self.set_subtitle(self.question_entry.get_text())
+        self.set_title(self.answer_entry.get_text())
+        return True

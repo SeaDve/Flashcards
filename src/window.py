@@ -42,6 +42,9 @@ class FlashcardsWindow(Handy.ApplicationWindow):
     back_button = Gtk.Template.Child()
     search_button = Gtk.Template.Child()
 
+    title_stack = Gtk.Template.Child()
+    cardstack_title = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -62,14 +65,14 @@ class FlashcardsWindow(Handy.ApplicationWindow):
 
     def set_play_mode(self):
         self.main_listbox.set_visible(False)
-        self.top_viewswitcher.set_visible(False)
+        self.title_stack.set_visible_child(self.cardstack_title)
         self.bottom_viewswitcher.set_visible(False)
         self.search_button.set_visible(False)
         self.left_headerbar_stack.set_visible_child(self.back_button)
 
     def unset_play_mode(self):
         self.main_listbox.set_visible(True)
-        self.top_viewswitcher.set_visible(True)
+        self.title_stack.set_visible_child(self.squeezer)
         self.bottom_viewswitcher.set_visible(True)
         self.search_button.set_visible(True)
         self.left_headerbar_stack.set_visible_child(self.plus_button)
@@ -79,11 +82,7 @@ class FlashcardsWindow(Handy.ApplicationWindow):
         self.bottom_viewswitcher.set_reveal(child != self.top_viewswitcher)
 
     def on_new_cardstack(self, widget):
-        title = self.title_entry.get_text()
-        self.title_entry.set_text("")
-        self.list.append(title)
-        new_cardstack = CardStackRow(self, title=title)
-        self.main_listbox.insert(new_cardstack, -1)
+        pass
 
 
 

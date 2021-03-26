@@ -35,10 +35,6 @@
           "question":"What is the pearl of the orient sea?"
         },
         {
-          "answer":"72",
-          "question":"What is the average bpm of a normal person?"
-        },
-        {
           "answer":"10",
           "question":"How many nations are there in ASEAN?"
         },
@@ -79,6 +75,16 @@
         {
           "answer":"10",
           "question":"How many nations are there in ASEAN?"
+        }
+      ]
+    },
+    {
+      "title":"",
+      "color":"",
+      "cards":[
+        {
+            "answer" : "",
+            "question" : ""
         }
       ]
     }
