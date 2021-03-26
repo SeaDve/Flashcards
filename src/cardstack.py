@@ -99,6 +99,14 @@ class CardStackEdit(Gtk.Box):
             question_row.set_answer(item["answer"])
             self.edit_mode_listbox.insert(question_row, -1)
 
+        new_card_row = Gtk.ListBoxRow()
+        image = Gtk.Image()
+        image.set_from_icon_name("list-add-symbolic", 2)
+        new_card_row.add(image)
+        image.show()
+        new_card_row.show()
+        self.edit_mode_listbox.insert(new_card_row, -1)
+
 
 @Gtk.Template(resource_path='/io/github/seadve/Flashcards/card.ui')
 class Card(Handy.ExpanderRow):
