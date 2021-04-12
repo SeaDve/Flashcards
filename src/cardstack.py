@@ -23,6 +23,7 @@ class CardStackRow(Handy.ActionRow):
     __gtype_name__ = 'CardStackRow'
 
     play_button = Gtk.Template.Child()
+    trash_button = Gtk.Template.Child()
 
     def __init__(self, window, cards_list, title, **kwargs):
         super().__init__(**kwargs)
@@ -34,7 +35,7 @@ class CardStackRow(Handy.ActionRow):
         self.overlay = self.window.main_overlay
         self.cards_list = cards_list
 
-        self.window.data["cardstack"]
+        self.window.data
         self.set_subtitle(f"{len(cards_list)} cards")
 
         self.edit_box = CardStackEdit(self.cards_list)
@@ -43,6 +44,7 @@ class CardStackRow(Handy.ActionRow):
         self.play_box.set_question(self.title)
 
         self.play_button.connect("clicked", self.on_play_button_clicked)
+        self.trash_button.connect("clicked", self.on_trash_button_clicked)
         self.connect("activated", self.on_edit_mode)
         self.window.back_button.connect("clicked", self.on_back_button_clicked)
 
@@ -50,6 +52,9 @@ class CardStackRow(Handy.ActionRow):
         self.window.set_play_mode()
         self.window.cardstack_title.set_text(self.title)
         self.overlay.add_overlay(self.play_box)
+
+    def on_trash_button_clicked(self, widget):
+        self.destroy()
 
     def on_edit_mode(self, widget):
         self.window.set_play_mode()

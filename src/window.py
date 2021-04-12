@@ -55,7 +55,7 @@ class FlashcardsWindow(Handy.ApplicationWindow):
         with open('/home/dave/Projects/flashcards/src/data.json') as file:
             self.data = json.load(file)
 
-        for stack in self.data["cardstack"]:
+        for stack in self.data:
             cards_list = []
             for card in stack["cards"]:
                 cards_list.append(card)
