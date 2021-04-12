@@ -23,6 +23,7 @@ flashcards_sources = [
   'main.py',
   'window.py',
   'cardstack.py',
+  'cardstackmodel.py'
 ]
 
 install_data(flashcards_sources, install_dir: moduledir)
