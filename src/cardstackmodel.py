@@ -1,5 +1,3 @@
-import json
-
 from gi.repository import Gio, GLib
 
 class CardStackModel:
@@ -20,7 +18,7 @@ class CardStackModel:
         )
 
     def del_cardstack(self, cardstack):
-        pass
+        del self.cardstack_list[cardstack]
 
 
     def new_card(self, cardstack, answer, question):
@@ -33,7 +31,7 @@ class CardStackModel:
 
 
     def del_card(self, cardstack, card):
-        pass
+        del self.cardstack_list[cardstack][card]
 
 
 
