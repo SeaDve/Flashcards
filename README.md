@@ -10,7 +10,7 @@
 </p>
 
 ## WARNING
-This software is still far from usable.
+This software is still far from usable. And, the design will most likely change and not final.
 
 
 ## Description
