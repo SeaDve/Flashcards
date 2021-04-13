@@ -1,23 +1,35 @@
 import json
 
+from gi.repository import Gio, GLib
 
 class CardStackModel:
     def __init__(self):
-        settings = Gio.Settings.new('io.github.seadve.Flashcards')
-        self.cardstack_list = list(settings.get_value("cardstack-list"))
+        self.settings = Gio.Settings.new('io.github.seadve.Flashcards')
+        self.cardstack_list = list(self.settings.get_value("cardstack-list"))
 
     def save_values(self):
-        pass
+        self.settings.set_value("cardstack-list", GLib.Variant('aa{sv}', self.cardstack_list))
 
     def new_cardstack(self, title, color):
-        pass
+        self.cardstack_list.append(
+            {
+                "title": title,
+                "color": color,
+                "cards": []
+            }
+        )
 
     def del_cardstack(self, cardstack):
         pass
 
 
     def new_card(self, cardstack, answer, question):
-        pass
+        self.cardstack_list[cardstack]["cards"].append(
+            {
+                "answer": answer,
+                "question": question
+            }
+        )
 
 
     def del_card(self, cardstack, card):
